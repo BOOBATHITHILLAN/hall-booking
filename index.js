@@ -123,6 +123,21 @@ app.get('/customer/:name', (req, res) => {
     }
 })
 
+//Remove/delete room booking
+app.post('/cancelbooking/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const room = Room.find(room => room.room_id == id && room.booked_status === true);
+    if (room) {
+
+        Room = Room.map(room => room.room_id == id ? { ...room, "booked_status": false } : room);
+        RoomBookedCustomers = RoomBookedCustomers.filter(customer=>customer.room_id!=id)
+        res.status(201).json({ message: "Room booking status successfully changed " });
+
+    } else {
+        res.status(404).json({ message: "Room booking not available" });
+    }
+});
+
 
 //server listen
 const PORT = 3001;
