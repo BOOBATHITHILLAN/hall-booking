@@ -130,7 +130,7 @@ app.post('/cancelbooking/:id', (req, res) => {
     if (room) {
 
         Room = Room.map(room => room.room_id == id ? { ...room, "booked_status": false } : room);
-        RoomBookedCustomers = RoomBookedCustomers.filter(customer=>customer.room_id!=id)
+        RoomBookedCustomers = RoomBookedCustomers.filter(customer => customer.room_id != id)
         res.status(201).json({ message: "Room booking status successfully changed " });
 
     } else {
